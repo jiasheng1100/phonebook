@@ -1,7 +1,15 @@
 const express = require('express')
+const morgan = require('morgan')  //use morgan middleware for logging
+
+//log request data to console
+morgan.token('data', function getData(req) { return JSON.stringify(req.body) })
+
 const app = express()
 
 app.use(express.json())
+
+app.use(morgan('tiny'))
+app.use(morgan(':data'))
 
 let persons = [
     { 
