@@ -1,5 +1,6 @@
 const express = require('express')
-const morgan = require('morgan')  //use morgan middleware for logging
+const morgan = require('morgan')  
+const cors = require('cors')
 
 //log request data to console
 morgan.token('data', function getData(req) { return JSON.stringify(req.body) })
@@ -8,8 +9,12 @@ const app = express()
 
 app.use(express.json())
 
+//use morgan middleware for logging
 app.use(morgan('tiny'))
 app.use(morgan(':data'))
+
+//use cors middleware to allow requests from all origins
+app.use(cors())
 
 let persons = [
     { 
@@ -84,7 +89,7 @@ app.post('/api/persons', (request, response) => {
   response.json(person)
 })
 
-const PORT = 3001
+const PORT = process.env.PORT || "8080";
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
