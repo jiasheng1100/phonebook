@@ -9,6 +9,9 @@ const app = express()
 
 app.use(express.json())
 
+//To make express show static content, index.html and JavaScript it fetches
+app.use(express.static('build'))
+
 //use morgan middleware for logging
 app.use(morgan('tiny'))
 app.use(morgan(':data'))
