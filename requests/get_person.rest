@@ -1,4 +1,4 @@
-GET http://localhost:3001/api/persons/4
+GET http://localhost:8080/api/persons
 
 ###
-Get http://localhost:3001/api/persons/5
+Get http://localhost:8080/api/persons/63866ce4e456ddd2534f1474
