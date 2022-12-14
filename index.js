@@ -9,6 +9,7 @@ morgan.token('data', function getData(req) { return JSON.stringify(req.body) })
 
 const app = express()
 
+// json parser middleware (has to be among the very first loaded middleware)
 app.use(express.json())
 
 //To make express show static content, index.html and JavaScript it fetches
@@ -34,16 +35,22 @@ app.get('/info', (request, response) => {
 })
 
 app.get('/api/persons/:id', (request, response) => {
-  Person.findById(request.params.id).then(person => {
-    response.json(person)
-  })
+  Person.findById(request.params.id)
+    .then(person => {
+      if (person) {
+        response.json(person)
+      }else{
+        response.status(404).end()  // 404 Bad Request
+      }})
+    .catch(error => next(error))
 })
 
 app.delete('/api/persons/:id', (request, response) => {
-    const id = Number(request.params.id)
-    persons = persons.filter(person => person.id !== id)
-    // 204 no content
-    response.status(204).end()
+  Person.findByIdAndRemove(request.params.id)
+    .then(result => {
+      response.status(204).end()  // 204 no content
+    })
+    .catch(error => next(error))
   })
 
 app.post('/api/persons', (request, response) => {  
@@ -56,28 +63,53 @@ app.post('/api/persons', (request, response) => {
   }
 
   //if the name already exists in the phonebook
-  Person.find({}).then(persons => {
-    if (persons.find(person => person.name === body.name)){
-      return response.status(400).json({
-        error: 'name must be unique'
-      })
-    }else{
-      const person = new Person({
-        name: body.name,
-        number: body.number
-      })
-      person.save().then(savedPerson => {
-        response.json(savedPerson)
-      })
-    }
-  }) 
+  // Person.find({}).then(persons => {
+  //   if (persons.find(person => person.name === body.name)){
+  //     return response.status(400).json({
+  //       error: 'name must be unique'
+  //     })
+  //   }else{
+  //     const person = new Person({
+  //       name: body.name,
+  //       number: body.number
+  //     })
+  //     person.save().then(savedPerson => {
+  //       response.json(savedPerson)
+  //     })
+  //   }
+  // }) 
 })
 
+app.put('/api/persons/:id', (request, response, next) => {
+  const body = request.body
+
+  const person = {
+    name: body.name,
+    number: body.number,
+  }
+
+  Person.findByIdAndUpdate(request.params.id, person, { new: true })
+    .then(updatedPerson => {
+      response.json(updatedPerson)
+    })
+    .catch(error => next(error))
+})
+
+// handler of requests with unknown endpoint (has to be second last loaded)
 const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: 'unknown endpoint' })
 }
-
 app.use(unknownEndpoint)
+
+// handler of requests with result to errors (has to be the last loaded middleware.)
+const errorHandler = (error, request, response, next) => {
+  console.error(error.message)
+  if (error.name === 'CastError') {
+    return response.status(400).send({ error: 'malformatted id' })
+  } 
+  next(error)
+}
+app.use(errorHandler)
 
 const PORT = process.env.PORT||"8080";
 app.listen(PORT, () => {

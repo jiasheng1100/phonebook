@@ -2,3 +2,12 @@ GET http://localhost:8080/api/persons
 
 ###
 Get http://localhost:8080/api/persons/63866ce4e456ddd2534f1474
+
+###
+Put http://localhost:8080/api/persons/638a52377a452a7db3fb9451
+Content-Type: application/json
+
+{
+    "name": "anyone",
+    "number": "34567092"
+}
