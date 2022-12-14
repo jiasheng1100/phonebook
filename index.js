@@ -60,6 +60,14 @@ app.post('/api/persons', (request, response) => {
     return response.status(400).json({ 
       error: 'content missing' 
     })
+  }else{
+    const person = new Person({
+    name: body.name,
+    number: body.number
+    })
+    person.save().then(savedPerson => {
+      response.json(savedPerson)
+    })
   }
 
   //if the name already exists in the phonebook
