@@ -24,8 +24,9 @@ const addPerson = (persons, newName, newNum, setNewName, setNewNum, setPersons, 
             setPersons(persons.filter(p => p.id !== changedPerson.id))
             setTimeout(() => { setMessage(null) }, 1500)
           })
-          return    
+              
       }
+      return
     }
    
     // if the user entered name does not exist in phonebook
