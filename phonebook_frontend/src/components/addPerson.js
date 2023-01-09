@@ -16,31 +16,39 @@ const addPerson = (persons, newName, newNum, setNewName, setNewNum, setPersons, 
             setPersons(persons.map(person => person.id === changedPerson.id ? response : person))
             setNewName('')
             setNewNum('')
+            setMessage(`Updated '${newName}'`)        
+            setTimeout(() => { setMessage(null) }, 1500)
           })
-
-        setMessage(`Updated '${newName}'`)        
-        setTimeout(() => { setMessage(null) }, 2500)
+          .catch(error => {
+            setMessage(`An error occurred while saving the person '${changedPerson.name}'`)
+            setPersons(persons.filter(p => p.id !== changedPerson.id))
+            setTimeout(() => { setMessage(null) }, 1500)
+          })
+          return    
       }
     }
-    else
-    {
-      const personObject = {
-        name: newName,
-        number: newNum
-      } 
+   
+    // if the user entered name does not exist in phonebook
+    const personObject = {
+      name: newName,
+      number: newNum
+    } 
 
-      //save the added person object to backend server
-      personService
-      .create(personObject)
-      .then(response => {
-        setPersons(persons.concat(personObject))
-        setNewName('')
-        setNewNum('')
-      })
-
-      setMessage(`Added '${newName}'`)        
-      setTimeout(() => { setMessage(null) }, 2500)
-    }
+    //save the added person object to backend server
+    personService
+    .create(personObject)
+    .then(response => {
+      setPersons(persons.concat(personObject))
+      setNewName('')
+      setNewNum('')  
+      setMessage(`Added '${newName}'`)
+      setTimeout(() => { setMessage(null) }, 1500)  
+    })
+    .catch(error => {
+      setMessage(error.response.data.error)
+      setPersons(persons.filter(p => p.name !== newName))
+      setTimeout(() => { setMessage(null) }, 1500)
+    })    
   }
 
 export default addPerson

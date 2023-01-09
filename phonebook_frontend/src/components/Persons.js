@@ -10,8 +10,8 @@ const Persons = ({newFilter, persons, setPersons}) => {
     return <>
       {personsToShow.map(person => 
       <div className='person' key={person.name}>
-        {person.name} {person.number} 
-        <Button text={"delete"} handler={deletePerson(person.id, person.name, persons, setPersons)}/>
+        {person.name} {person.number} &nbsp; 
+        <Button text={"Remove"} handler={deletePerson(person.id, person.name, persons, setPersons)}/>
       </div>)}
     </>
 }

@@ -34,3 +34,12 @@ Content-Type: application/json
     "number": "34567092"
 }
 
+###
+POST http://localhost:8080/api/persons
+Content-Type: application/json
+
+{
+    "name": "a",
+    "number": "34567092"
+}
+

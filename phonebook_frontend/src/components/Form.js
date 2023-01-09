@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Form = ({text, value, setter}) => (
-    <div> {text}: 
+    <div> {text}: &nbsp;
       <input 
         value={value}
         //an event handler that synchronizes the changes made to input with the component's state

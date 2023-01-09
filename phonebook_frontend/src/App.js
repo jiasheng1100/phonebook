@@ -4,6 +4,7 @@ import Persons from './components/Persons'
 import addPerson from './components/addPerson'
 import Button from './components/Button'
 import Notification from './components/Notification'
+import Footer from './components/Footer'
 import personService from './services/persons'
 
 const App = () => {
@@ -20,18 +21,19 @@ const App = () => {
   }, [])
 
   return (
-    <div>
+    <div className='app'>
       <h1>Phonebook</h1>
       <Notification message={message} />
-      <Form text={"Filter phonebook with"} value={newFilter} setter={setNewFilter} />      
-      <h3>Add</h3>
+      <Form text={"Search for"} value={newFilter} setter={setNewFilter} />      
+      <h3>Add to Phonebook</h3>
       <form>
-        <Form text={"name"} value={newName} setter={setNewName} />
-        <Form text={"number"} value={newNum} setter={setNewNum} />
-        <Button text={"add"} handler={addPerson(persons, newName, newNum, setNewName, setNewNum, setPersons, setMessage)} />
+        <Form text={"Name"} value={newName} setter={setNewName} />
+        <Form text={"Number"} value={newNum} setter={setNewNum} />
+        <Button text={"Add"} handler={addPerson(persons, newName, newNum, setNewName, setNewNum, setPersons, setMessage)} />
       </form>
-      <h3>Numbers</h3>
+      <h3>Numbers in Phonebook</h3>
         <Persons newFilter={newFilter} persons={persons} setPersons={setPersons} />
+        <Footer />
     </div>
   )
 }

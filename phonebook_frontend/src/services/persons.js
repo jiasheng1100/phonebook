@@ -4,24 +4,15 @@ const baseUrl = '/api/persons'
 const getAll = () => (
     axios.get(baseUrl)
         .then(response => response.data)
-        .catch(error => {
-            console.log('fail')
-        })
 )
 
 const create = newObject => (
     axios.post(baseUrl, newObject)
         .then(response => response.data)
-        .catch(error => {
-            console.log('fail')
-        })
 )
 
 const remove = (id) => (
     axios.delete(`${baseUrl}/${id}`)
-        .catch(error => {
-            console.log('fail')
-        })
 )
 
 const update = (id, newObject) => (

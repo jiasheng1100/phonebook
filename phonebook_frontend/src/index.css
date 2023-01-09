@@ -1,9 +1,30 @@
 .message {
-    color: green;
-    background: lightgrey;
+    color: darkblue;
+    /*background: lightgrey;*/
     font-size: 20px;
     border-style: solid;
     border-radius: 5px;
     padding: 10px;
     margin-bottom: 10px;
   }
+
+.app {
+  width: 800px;
+  margin: 0 auto;
+  background-color: lightblue;
+  padding: 0px 20px 20px 20px;
+  text-align: center;
+  /*border: 5px solid black;*/
+}
+
+h1 {
+  font-size: 40px;
+}
+
+h3 {
+  font-size: 20px;
+}
+
+Button {
+  background-color: lightyellow;
+}
